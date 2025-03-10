@@ -26,14 +26,16 @@
 
     /* 隐藏水平滚动条，保留垂直滚动条 */
     html, body {
-      margin: 0;
-      padding: 0;
-      overflow-x: hidden;
-      font-family: Arial, sans-serif;
-      color: #333;
-      line-height: 1.6;
-      background-color: #fff;
-    }
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  font-family: Arial, sans-serif;
+  color: #333;
+  line-height: 1.6;
+  background: url('./asset/BG.png') no-repeat center center fixed;
+  background-size: cover;
+}
+
     /* 自定义垂直滚动条 (仅 WebKit) */
     ::-webkit-scrollbar {
       width: 12px;
@@ -123,9 +125,10 @@
 
     /* ========== Section & Intersection Observer 动画 ========== */
     section {
-      max-width: 50%;
+      max-width: 70%;
       margin: 0 auto;
       padding: 2em 1em;
+      
     }
     .fade-section {
       opacity: 0;
@@ -170,8 +173,11 @@
 
     /* ========== Home部分：Trailer在上，Brief在下 ========== */
     #home {
-      background-color: #f7f7f7;
+      background-color: rgba(255, 255, 255, 0.5);
       margin-top: 0; /* 确保Banner紧接着Home，无空隙 */
+      backdrop-filter: blur(5px); /* 毛玻璃模糊效果 */
+      border-radius: 10px; /* 圆角 */
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* 轻微阴影增强立体感 */
     }
     .home-content {
       display: flex;
@@ -208,7 +214,11 @@
 
     /* ========== Features ========== */
     #features {
-      background: #fff;
+      background-color: rgba(255, 255, 255, 0.5);
+      margin-top: 0; /* 确保Banner紧接着Home，无空隙 */
+      backdrop-filter: blur(5px); /* 毛玻璃模糊效果 */
+      border-radius: 10px; /* 圆角 */
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* 轻微阴影增强立体感 */
     }
     .feature-cards {
       display: flex;
@@ -248,7 +258,11 @@
 
     /* ========== Art Book ========== */
     #artbook {
-      background: #f7f7f7;
+      background-color: rgba(255, 255, 255, 0.5);
+      margin-top: 0; /* 确保Banner紧接着Home，无空隙 */
+      backdrop-filter: blur(5px); /* 毛玻璃模糊效果 */
+      border-radius: 10px; /* 圆角 */
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* 轻微阴影增强立体感 */
     }
     .artbook-container {
       width: 100%;
@@ -287,7 +301,11 @@
 
     /* ========== About Us ========== */
     #aboutus {
-      background: #fff;
+      background-color: rgba(255, 255, 255, 0.5);
+      margin-top: 0; /* 确保Banner紧接着Home，无空隙 */
+      backdrop-filter: blur(5px); /* 毛玻璃模糊效果 */
+      border-radius: 10px; /* 圆角 */
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* 轻微阴影增强立体感 */
     }
     .team-intro {
       margin-bottom: 2em;
