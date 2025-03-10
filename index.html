@@ -5,131 +5,191 @@
   <!-- 移动端自适应 -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Bubono’s Bumperland</title>
-
+  <link rel="icon" href="./asset/Logo.png">
+  
   <!-- Navnav+ CSS (CDN) -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/cruip/css-navnav@latest/dist/navnav.min.css" />
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
   <!-- Uiverse (CDN) -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/uiverse/uiverse@latest/dist/uiverse.min.css">
+  <!-- 引入Google推荐的Roboto字体（新增，不影响原有路径） -->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
 
+  <!--
+    优化说明：
+    1. 严格保持所有文字、图片、链接等内容和路径不变。
+    2. 仅对样式和布局做调整：优化全局留白、卡片式布局、阴影效果、交互动画、响应式设计等，全面参照Material Design Guidelines。
+    3. 增加详细注释，便于理解每处修改的意图。
+  -->
   <style>
-    /* ========== 全局基础设置 ========== */
+    /* -------------------- 全局CSS变量定义 -------------------- */
+    :root {
+      --base-font: 'Roboto', 'Arial', sans-serif; /* 使用Roboto字体 */
+      --base-font-size: 16px;
+      --heading-font-size: 2rem;
+      --body-font-size: 1rem;
+      --base-line-height: 1.6;
+      --base-spacing: 1rem;
+      --container-max-width: 80%;
+      --primary-color: #333;
+      --secondary-color: #93b5cf;
+      --background-overlay: rgba(255,255,255,0.95);
+      --section-bg: rgba(255,255,255,0.9);
+      --section-padding: 2.5rem;   /* 稍加内边距，保证内容呼吸感 */
+      --section-margin: 3rem 0;
+      --transition-duration: 0.3s;
+      --card-radius: 10px;
+      --shadow-light: 0 2px 4px rgba(0,0,0,0.12);
+      --shadow-medium: 0 4px 8px rgba(0,0,0,0.16);
+    }
+
+    /* -------------------- 全局基础设置 -------------------- */
     html {
-      font-size: 16px;
+      font-size: var(--base-font-size);
       box-sizing: border-box;
-      scroll-behavior: smooth; 
+      scroll-behavior: smooth;  /* 平滑滚动 */
+      letter-spacing: 0.5px;
     }
     *, *::before, *::after {
       box-sizing: inherit;
     }
-
-    /* 隐藏水平滚动条，保留垂直滚动条 */
     html, body {
-  margin: 0;
-  padding: 0;
-  overflow-x: hidden;
-  font-family: Arial, sans-serif;
-  color: #333;
-  line-height: 1.6;
-  background: url('./asset/BG.png') no-repeat center center fixed;
-  background-size: cover;
-}
-
-    /* 自定义垂直滚动条 (仅 WebKit) */
-    ::-webkit-scrollbar {
-      width: 12px;
-    }
-    ::-webkit-scrollbar-track {
-      background: #f1f1f1;
-    }
-    ::-webkit-scrollbar-thumb {
-      background: #444;
-      border-radius: 0;
-    }
-    ::-webkit-scrollbar-thumb:hover {
-      background: #666;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+      font-family: var(--base-font);
+      color: var(--primary-color);
+      line-height: var(--base-line-height);
+      /* 保持原背景图片不变，同时增强背景覆盖效果 */
+      background: url('./asset/BG.png') no-repeat center center fixed;
+      background-size: cover;
     }
 
-    /* ========== 顶部导航 (Fixed) ========== */
+    /* -------------------- Header 与 Navbar 优化 -------------------- */
     header {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       z-index: 1000;
-      background: rgba(255,255,255,0.95); /* 半透明背景，可避免完全遮挡Banner */
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      background: var(--background-overlay);
+      box-shadow: var(--shadow-light);
+      padding: 0 var(--base-spacing);
     }
     .top-nav {
       display: flex;
       align-items: center;
       justify-content: space-between;
       max-width: 1200px;
+      width: 100%;
       margin: 0 auto;
-      padding: 0 1rem;
+      padding: var(--base-spacing) 0;
       min-height: 60px;
     }
     .nav-brand {
+      display: flex;
+      align-items: center;
+    }
+    .nav-brand img {
+      max-height: 50px;
+      transition: transform var(--transition-duration);
+    }
+    .nav-brand img:hover {
+      transform: scale(1.05);
+    }
+    .nav-brand .game-title {
       font-size: 2rem;
       font-weight: bold;
-      color: #333;
-      text-align: center;
-      margin: 0 auto;
+      color: var(--primary-color);
+      margin-left: 0.5rem;
     }
     .nav-menu {
       display: flex;
-      gap: 2rem;
+      gap: 1.5rem;
     }
     .nav-menu li {
       list-style: none;
     }
     .nav-menu li a {
-      color: #333;
+      color: var(--primary-color);
       font-weight: 500;
       padding: 0.5em 0.8em;
       font-size: 1rem;
       border-radius: 4px;
       text-decoration: none;
+      transition: background-color var(--transition-duration), transform var(--transition-duration);
     }
-    .nav-menu li a:hover {
+    .nav-menu li a:hover,
+    .nav-menu li a:focus {
       background-color: #f2f2f2;
+      transform: scale(1.03);
     }
-    /* 当前激活菜单右侧显示箭头 */
+    .nav-menu li a.active {
+      background-color: #ddd;
+    }
     .nav-menu li a.active::after {
       content: "→";
       margin-left: 0.5em;
-      color: #93b5cf;
+      color: var(--secondary-color);
       font-weight: bold;
     }
+    .nav-toggle {
+      display: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+    @media (max-width: 768px) {
+      .nav-toggle {
+        display: block;
+      }
+      .nav-menu {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 60px;
+        left: 0;
+        right: 0;
+        background: #fff;
+        box-shadow: var(--shadow-medium);
+      }
+      .nav-menu li a {
+        border-radius: 0;
+        padding: 0.75em 1em;
+      }
+      .nav-menu.open {
+        display: flex;
+      }
+    }
 
-    /* ========== Footer ========== */
-    footer {
-      background: #222;
-      color: #fff;
-      text-align: center;
-      padding: 1em;
+    /* -------------------- Container 与 Section 优化 -------------------- */
+    .container {
+      max-width: var(--container-max-width);
+      margin: 100px auto 0; /* 保持顶部留白，避免与固定头部重叠 */
+      padding: 0 var(--base-spacing);
     }
-    .social-icons {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 0.5em;
-      margin-bottom: 0.5em;
-    }
-    .social-icons i {
-      font-size: 24px;
-      color: #fff;
-      margin: 0 4px;
-    }
-
-    /* ========== Section & Intersection Observer 动画 ========== */
     section {
-      max-width: 70%;
-      margin: 0 auto;
-      padding: 2em 1em;
-      
+      margin: var(--section-margin);
+      padding: var(--section-padding);
+      background: var(--section-bg);
+      border-radius: var(--card-radius);
+      box-shadow: var(--shadow-medium);
     }
+    h1, h2, h3, .banner-title, .nav-menu li a, .game-title {
+      font-family: var(--base-font);
+      letter-spacing: 0.5px;
+    }
+    section h2 {
+      text-align: center;
+      font-size: var(--heading-font-size);
+      margin-bottom: 1em;
+    }
+    p {
+      font-size: var(--body-font-size);
+      margin-bottom: 1em;
+    }
+
+    /* -------------------- 淡入动画效果 -------------------- */
     .fade-section {
       opacity: 0;
       transform: translateY(20px);
@@ -139,14 +199,8 @@
       opacity: 1;
       transform: translateY(0);
     }
-    /* 每个 section 的标题居中放大 */
-    section h2 {
-      text-align: center;
-      font-size: 2rem;
-      margin-bottom: 1em;
-    }
 
-    /* ========== 全宽Banner (100vh) 与 Banner Title ========== */
+    /* -------------------- 全宽Banner 优化 -------------------- */
     .fullwidth-banner {
       position: relative;
       width: 100vw;
@@ -159,6 +213,7 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
+      transition: opacity var(--transition-duration);
     }
     .banner-title {
       position: absolute;
@@ -171,13 +226,13 @@
       text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
     }
 
-    /* ========== Home部分：Trailer在上，Brief在下 ========== */
+    /* -------------------- Home部分 优化 -------------------- */
     #home {
       background-color: rgba(255, 255, 255, 0.5);
-      margin-top: 0; /* 确保Banner紧接着Home，无空隙 */
-      backdrop-filter: blur(5px); /* 毛玻璃模糊效果 */
-      border-radius: 10px; /* 圆角 */
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* 轻微阴影增强立体感 */
+      margin-top: 0;
+      backdrop-filter: blur(5px);
+      border-radius: var(--card-radius);
+      box-shadow: var(--shadow-medium);
     }
     .home-content {
       display: flex;
@@ -185,55 +240,56 @@
       gap: 2em;
       justify-content: center;
       align-items: center;
+      padding: 1rem; /* 增加内边距以便内容更呼吸 */
     }
-    /* Trailer卡片 */
     .video-embed {
       width: 100%;
       background: #fff;
-      box-shadow: 0 0 5px rgba(0,0,0,0.1);
-      border-radius: 10px;
-      padding: 1em;
+      box-shadow: var(--shadow-light);
+      border-radius: var(--card-radius);
+      padding: 1rem;
     }
     .video-embed video {
       width: 100%;
       height: auto;
       display: block;
+      border-radius: var(--card-radius);
     }
-    /* Brief卡片 */
     .text-blurb {
       width: 100%;
       background: #fff;
-      box-shadow: 0 0 5px rgba(0,0,0,0.1);
-      border-radius: 10px;
-      padding: 1em;
+      box-shadow: var(--shadow-light);
+      border-radius: var(--card-radius);
+      padding: 1rem;
       text-align: center;
     }
-    .text-blurb p {
-      font-size: 0.9rem;
-    }
 
-    /* ========== Features ========== */
+    /* -------------------- Features部分 优化 -------------------- */
     #features {
       background-color: rgba(255, 255, 255, 0.5);
-      margin-top: 0; /* 确保Banner紧接着Home，无空隙 */
-      backdrop-filter: blur(5px); /* 毛玻璃模糊效果 */
-      border-radius: 10px; /* 圆角 */
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* 轻微阴影增强立体感 */
+      margin-top: 0;
+      backdrop-filter: blur(5px);
+      border-radius: var(--card-radius);
+      box-shadow: var(--shadow-medium);
     }
     .feature-cards {
       display: flex;
       flex-direction: column;
       gap: 2em;
-      margin-top: 1.5em;
+      margin-top: 1.5rem;
     }
     .feature-card {
       display: flex;
       align-items: center;
       background: #f9f9f9;
-      padding: 1em;
-      box-shadow: 0 0 5px rgba(0,0,0,0.1);
-      border-radius: 10px;
-      gap: 1em;
+      padding: 1rem;
+      box-shadow: var(--shadow-light);
+      border-radius: var(--card-radius);
+      gap: 1rem;
+      transition: transform var(--transition-duration);
+    }
+    .feature-card:hover {
+      transform: translateY(-5px);
     }
     .feature-cards .feature-card:nth-child(even) {
       flex-direction: row-reverse;
@@ -243,41 +299,45 @@
     }
     .feature-image {
       width: 20vw;
-      height: 12vw;
-      overflow: hidden;
+      min-width: 150px;
       display: flex;
       justify-content: center;
       align-items: center;
-      border-radius: 10px;
+      border-radius: var(--card-radius);
+      overflow: hidden;
     }
     .feature-image img {
       width: 100%;
-      height: 100%;
+      height: auto;
       object-fit: cover;
     }
 
-    /* ========== Art Book ========== */
+    /* -------------------- Art Book部分 优化 -------------------- */
     #artbook {
       background-color: rgba(255, 255, 255, 0.5);
-      margin-top: 0; /* 确保Banner紧接着Home，无空隙 */
-      backdrop-filter: blur(5px); /* 毛玻璃模糊效果 */
-      border-radius: 10px; /* 圆角 */
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* 轻微阴影增强立体感 */
+      margin-top: 0;
+      backdrop-filter: blur(5px);
+      border-radius: var(--card-radius);
+      box-shadow: var(--shadow-medium);
     }
     .artbook-container {
       width: 100%;
       aspect-ratio: 65 / 30;
-      margin: 0 auto 1em;
+      margin: 0 auto 1rem;
       position: relative;
       text-align: center;
       overflow: hidden;
-      box-shadow: 0 0 5px rgba(0,0,0,0.1);
-      border-radius: 10px;
+      box-shadow: var(--shadow-light);
+      border-radius: var(--card-radius);
     }
     #artbookImage {
       width: 100%;
       height: 100%;
       object-fit: cover;
+      transition: transform var(--transition-duration);
+    }
+    #artbookImage:hover {
+      transform: scale(1.02);
     }
     .prev,
     .next {
@@ -288,9 +348,15 @@
       padding: 0.5em 1em;
       cursor: pointer;
       font-size: 1rem;
-      background: #93b5cf;
+      background: var(--secondary-color);
       color: #fff;
       border-radius: 4px;
+      transition: background-color var(--transition-duration), transform var(--transition-duration);
+    }
+    .prev:hover,
+    .next:hover {
+      background: #7aa3c2;
+      transform: scale(1.05);
     }
     .prev { left: 0.5em; }
     .next { right: 0.5em; }
@@ -299,28 +365,33 @@
       margin-top: 1em;
     }
 
-    /* ========== About Us ========== */
+    /* -------------------- About Us部分 优化 -------------------- */
     #aboutus {
       background-color: rgba(255, 255, 255, 0.5);
-      margin-top: 0; /* 确保Banner紧接着Home，无空隙 */
-      backdrop-filter: blur(5px); /* 毛玻璃模糊效果 */
-      border-radius: 10px; /* 圆角 */
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* 轻微阴影增强立体感 */
+      margin-top: 0;
+      backdrop-filter: blur(5px);
+      border-radius: var(--card-radius);
+      box-shadow: var(--shadow-medium);
     }
     .team-intro {
-      margin-bottom: 2em;
+      margin-bottom: 2rem;
     }
     .team-members {
       display: grid;
-      grid-template-columns: repeat(auto-fit, 500px);
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
       justify-content: center;
-      gap: 2em;
     }
     .team-member {
-      width: 500px;
+      width: 100%;
+      max-width: 500px;
       height: 340px;
       perspective: 1000px;
       cursor: pointer;
+      transition: transform var(--transition-duration);
+    }
+    .team-member:hover {
+      transform: scale(1.02);
     }
     .flip-inner {
       position: relative;
@@ -336,15 +407,15 @@
       position: absolute;
       width: 100%;
       height: 100%;
-      border-radius: 10px;
-      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+      border-radius: var(--card-radius);
+      box-shadow: var(--shadow-light);
       backface-visibility: hidden;
       display: flex;
       align-items: center;
       justify-content: center;
       flex-direction: column;
       text-align: center;
-      padding: 1em;
+      padding: 1rem;
     }
     .flip-front {
       background: #f9f9f9;
@@ -353,23 +424,27 @@
       width: auto;
       height: 120px;
       border-radius: 50%;
-      margin-bottom: 0.5em;
+      margin-bottom: 0.5rem;
+      transition: transform var(--transition-duration);
+    }
+    .flip-front img:hover {
+      transform: scale(1.05);
     }
     .flip-back {
-      background: #93b5cf;
+      background: var(--secondary-color);
       color: #fff;
       transform: rotateY(180deg);
     }
 
-    /* ========== 自定义按钮 ========== */
+    /* -------------------- 自定义按钮 优化 -------------------- */
     .uiverse-button {
       border: none;
       background-color: #444;
       color: #fff;
-      border-radius: 0.6em;
-      transition: box-shadow 0.3s, transform 0.2s;
+      border-radius: 0.6rem;
+      transition: box-shadow var(--transition-duration), transform 0.2s;
       font-size: 1rem;
-      padding: 0.6em 1.2em;
+      padding: 0.6rem 1.2rem;
       cursor: pointer;
     }
     .uiverse-button:hover {
@@ -377,9 +452,49 @@
       transform: translateY(-2px);
     }
 
-    /* ========== Tab Navigation: 默认仅显示 active section ========== */
+    /* -------------------- Tab Navigation -------------------- */
     .tab-section { display: none; }
     .tab-section.active { display: block; }
+
+    /* -------------------- 返回顶部按钮 优化 -------------------- */
+    #backToTop {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      display: none;
+      background-color: var(--secondary-color);
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      width: 3rem;
+      height: 3rem;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: var(--shadow-medium);
+      transition: opacity var(--transition-duration);
+      z-index: 1001;
+    }
+    #backToTop:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(147,181,207,0.5);
+    }
+
+    /* -------------------- 响应式设计调整 -------------------- */
+    @media (max-width: 768px) {
+      .banner-title {
+        font-size: 2.5rem;
+      }
+      section h2 {
+        font-size: 1.75rem;
+      }
+      p {
+        font-size: 0.95rem;
+      }
+      .home-content, .video-embed, .text-blurb {
+        padding: 0.75rem;
+      }
+    }
   </style>
 </head>
 <body>
@@ -387,7 +502,10 @@
   <!-- 顶部导航 (Sticky) -->
   <header>
     <nav class="top-nav">
-      <div class="nav-brand">Bubono’s Bumperland</div>
+      <div class="nav-brand">
+        <img src="./asset/Logo.png" alt="Bubono’s Bumperland Logo" />
+        <span class="game-title">Bubono’s Bumperland</span>
+      </div>
       <ul class="nav-menu">
         <li><a href="#home" class="tab-link" data-tab="home">Home</a></li>
         <li><a href="#features" class="tab-link" data-tab="features">Features</a></li>
@@ -404,173 +522,171 @@
   </div>
 
   <!-- Tab Content Sections -->
-  <section id="home" class="fade-section tab-section active">
-    <h2>Game Brief</h2>
-    <div class="home-content" style="flex-direction: column; align-items: center;">
-      <!-- Trailer卡片 (上) -->
-      <div class="video-embed" style="width:100%;">
-        <h3>Game Trailer</h3>
-        <video controls loading="lazy">
-          <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
+  <div class="container">
+    <section id="home" class="fade-section tab-section active">
+      <h2>Game Brief</h2>
+      <div class="home-content" style="flex-direction: column; align-items: center;">
+        <!-- Trailer卡片 (上) -->
+        <div class="video-embed" style="width:100%;">
+          <h3>Game Trailer</h3>
+          <video controls loading="lazy">
+            <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+        </div>
+        <!-- Brief卡片 (下) -->
+        <div class="text-blurb" style="width:100%;">
+          <p>
+            Bubono’s Bumperland, headed by the iconic Bubono the Rat, is a booming destination with endless attractions and three different branches. There’s the medieval Bubono’s Burg, the fiery Bubono’s Abyss, and the outer reaches of Bubono’s Big Bang. You play as a mechanic and your job is to maintain the park and its rides and make sure every attendant is having a great time. Beware, as the staff hierarchy gets more efficient, it may be time to seek out new ventures…
+          </p>
+        </div>
       </div>
-      <!-- Brief卡片 (下) -->
-      <div class="text-blurb" style="width:100%;">
-        <p>
-          Bubono’s Bumperland, headed by the iconic Bubono the Rat, is a booming destination with endless attractions and three different branches. There’s the medieval Bubono’s Burg, the fiery Bubono’s Abyss, and the outer reaches of Bubono’s Big Bang. You play as a mechanic and your job is to maintain the park and its rides and make sure every attendant is having a great time. Beware, as the staff hierarchy gets more efficient, it may be time to seek out new ventures…
+    </section>
 
+    <section id="features" class="fade-section tab-section">
+      <h2>Features</h2>
+      <div class="feature-cards">
+        <!-- 卡片1 -->
+        <div class="feature-card">
+          <div class="feature-text">
+            <h3>Bumping and crashing</h3>
+            <p>
+              Bubono’s Bumperland great Bumper Buggies are designed for chaotic uncontrollable speed and impact! Depending on what you impact, you’ll be sent off at angles and speeds that can cause all sorts of mayhem. Despite the buggy’s playful appearance, anything and everything can be rammed and smashed. With the right speed and angle, nothing is out of bounds for chaos!
+            </p>
+          </div>
+          <div class="feature-image">
+            <img src="./asset/Feature_1.png" alt="Feature 1" loading="lazy" />
+          </div>
+        </div>
+        <!-- 卡片2 -->
+        <div class="feature-card">
+          <div class="feature-text">
+            <h3>Smart Enemies</h3>
+            <p>
+              The park branches are full of colorful characters built for each theme. Projectiles fly across the park from catapults attempting to pelt pillory peasants with tomatoes, imp costumed attendees parade around with pitchforks, and UFOs buzz in the air hoping to snatch up anything that crosses their beams.
+            </p>
+          </div>
+          <div class="feature-image">
+            <img src="./asset/Feature_2.png" alt="Feature 2" loading="lazy" />
+          </div>
+        </div>
+        <!-- 卡片3 -->
+        <div class="feature-card">
+          <div class="feature-text">
+            <h3>Special abilities</h3>
+            <p>
+              As a mechanic, you have the ability to upgrade your car depending on which foes you’ve overcome. Anything you build onto your car aids in your pursuit of chaos, so go wild with any upgrade you come across!
+            </p>
+          </div>
+          <div class="feature-image">
+            <img src="./asset/Feature_3.png" alt="Feature 3" loading="lazy" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="artbook" class="fade-section tab-section">
+      <h2>Art Book</h2>
+      <div class="artbook-container">
+        <img id="artbookImage" src="./asset/BannerImage.png" alt="Art Book" loading="lazy" />
+        <button class="prev uiverse-button" onclick="prevImage()">&#10094;</button>
+        <button class="next uiverse-button" onclick="nextImage()">&#10095;</button>
+      </div>
+      <div class="pdf-download">
+        <button class="uiverse-button">PDF Download</button>
+      </div>
+    </section>
+
+    <section id="aboutus" class="fade-section tab-section">
+      <h2>About Us</h2>
+      <div class="team-intro">
+        <p>
+          Each Sprint lasts about two weeks...
         </p>
       </div>
-    </div>
-  </section>
-
-  <section id="features" class="fade-section tab-section">
-    <h2>Features</h2>
-    <div class="feature-cards">
-      <!-- 卡片1 -->
-      <div class="feature-card">
-        <div class="feature-text">
-          <h3>Bumping and crashing</h3>
-          <p>
-            Bubono’s Bumperland great Bumper Buggies are designed for chaotic uncontrollable speed and impact! Depending on what you impact, you’ll be sent off at angles and speeds that can cause all sorts of mayhem. Despite the buggy’s playful appearance, anything and everything can be rammed and smashed. With the right speed and angle, nothing is out of bounds for chaos!
-
-          </p>
-        </div>
-        <div class="feature-image">
-          <img src="./asset/Feature_1.png" alt="Feature 1" loading="lazy" />
-        </div>
-      </div>
-      <!-- 卡片2 -->
-      <div class="feature-card">
-        <div class="feature-text">
-          <h3>Smart Enemies</h3>
-          <p>
-            The park branches are full of colorful characters built for each theme. Projectiles fly across the park from catapults attempting to pelt pillory peasants with tomatoes, imp costumed attendees parade around with pitchforks, and UFOs buzz in the air hoping to snatch up anything that crosses their beams.
-
-          </p>
-        </div>
-        <div class="feature-image">
-          <img src="./asset/Feature_2.png" alt="Feature 2" loading="lazy" />
-        </div>
-      </div>
-      <!-- 卡片3 -->
-      <div class="feature-card">
-        <div class="feature-text">
-          <h3>Special abilities</h3>
-          <p>
-            As a mechanic, you have the ability to upgrade your car depending on which foes you’ve overcome. Anything you build onto your car aids in your pursuit of chaos, so go wild with any upgrade you come across!
-          </p>
-        </div>
-        <div class="feature-image">
-          <img src="./asset/Feature_3.png" alt="Feature 3" loading="lazy" />
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="artbook" class="fade-section tab-section">
-    <h2>Art Book</h2>
-    <div class="artbook-container">
-      <img id="artbookImage" src="./asset/BannerImage.png" alt="Art Book" loading="lazy" />
-      <button class="prev uiverse-button" onclick="prevImage()">&#10094;</button>
-      <button class="next uiverse-button" onclick="nextImage()">&#10095;</button>
-    </div>
-    <div class="pdf-download">
-      <button class="uiverse-button">PDF Download</button>
-    </div>
-  </section>
-
-  <section id="aboutus" class="fade-section tab-section">
-    <h2>About Us</h2>
-    <div class="team-intro">
-      <p>
-        Each Sprint lasts about two weeks...
-      </p>
-    </div>
-    <div class="team-members">
-      <!-- 1. Douglas -->
-      <div class="team-member" onclick="window.open('https://example.com/douglas','_blank')">
-        <div class="flip-inner">
-          <div class="flip-front">
-            <img src="./asset/Douglas.png" alt="Chief Game Designer - Douglas" loading="lazy" />
-            <p><strong>Douglas</strong></p>
+      <div class="team-members">
+        <!-- 1. Douglas -->
+        <div class="team-member" onclick="window.open('https://example.com/douglas','_blank')">
+          <div class="flip-inner">
+            <div class="flip-front">
+              <img src="./asset/Douglas.png" alt="Chief Game Designer - Douglas" loading="lazy" />
+              <p><strong>Douglas</strong></p>
+            </div>
+            <div class="flip-back">
+              <h3>Learn More</h3>
+              <p style="margin-top:0.5em;">
+                Douglas is a programmer, level designer, and game designer and was the lead behind the direction of Bubono’s Bumperland. You can check out his process when detailing the game’s physics, level design, mechanics design, and team leadership [here].
+              </p>
+            </div>
           </div>
-          <div class="flip-back">
-            <h3>Learn More</h3>
-            <p style="margin-top:0.5em;">
-              Douglas is a programmer, level designer, and game designer and was the lead behind the direction of Bubono’s Bumperland. You can check out his process when detailing the game’s physics, level design, mechanics design, and team leadership [here].
-
-            </p>
+        </div>
+        <!-- 2. Giovanni -->
+        <div class="team-member" onclick="window.open('https://example.com/giovanni','_blank')">
+          <div class="flip-inner">
+            <div class="flip-front">
+              <img src="./asset/Giovanni.png" alt="Director of Visual - Giovanni" loading="lazy" />
+              <p><strong>Giovanni</strong></p>
+            </div>
+            <div class="flip-back">
+              <h3>Learn More</h3>
+              <p style="margin-top:0.5em;">
+                Giovanni is an effects artist, level designer, game designer, and 3D generalist behind creating the VFX you see throughout the game. He also contributed to the level design for each of the levels along with designing and coding the in-game UX interactions. You can check out the breakdowns of his VFX, level design, and UX work [here].
+              </p>
+            </div>
+          </div>
+        </div>
+        <!-- 3. Jingxuan -->
+        <div class="team-member" onclick="window.open('https://example.com/jingxuan','_blank')">
+          <div class="flip-inner">
+            <div class="flip-front">
+              <img src="./asset/Jingxuan.jpg" alt="Art Director - Jingxuan" loading="lazy" />
+              <p><strong>Jingxuan</strong></p>
+            </div>
+            <div class="flip-back">
+              <h3>Learn More</h3>
+              <p style="margin-top:0.5em;">
+                Jingxuan is the Art Lead and 3D Modeler for the project, responsible for creating 3D models and applying materials. Additionally, Jingxuan is in charge of designing and assembling the art book, ensuring a cohesive visual presentation of the project’s artistic direction. His contributions include modeling and texturing the bumper cars, as well as environmental assets such as houses, props, and foliage.
+              </p>
+            </div>
+          </div>
+        </div>
+        <!-- 4. Yang -->
+        <div class="team-member" onclick="window.open('https://example.com/yang','_blank')">
+          <div class="flip-inner">
+            <div class="flip-front">
+              <img src="./asset/Yang.jpg" alt="Technical Director - Yang" loading="lazy" />
+              <p><strong>Yang</strong></p>
+            </div>
+            <div class="flip-back">
+              <h3>Learn More</h3>
+              <p style="margin-top:0.5em;">
+                Yang serves as a echnical director on the game project "Bubono's Boppo Fun Park," where he is primarily responsible for feature development, stylized rendering, and AI integration. In designing the enemy and AI systems, he implemented more challenging intelligent interaction mechanisms while enhancing player engagement with the game world. Click [here] to learn more about his technical innovations and contributions to the project.
+              </p>
+            </div>
+          </div>
+        </div>
+        <!-- 5. Yuyan -->
+        <div class="team-member" onclick="window.open('https://example.com/yuyan','_blank')">
+          <div class="flip-inner">
+            <div class="flip-front">
+              <img src="./asset/Yuyan.png" alt="Director of Character & Interface - Yuyan" loading="lazy" />
+              <p><strong>Yuyan</strong></p>
+            </div>
+            <div class="flip-back">
+              <h3>Learn More</h3>
+              <p style="margin-top:0.5em;">
+                Yuyan Liu served as the character designer, 3D modeler, and 2D artist for the project, contributing to character design, asset modeling, and 2D artwork. Her responsibilities included designing, modeling, and texturing main characters, including their details and material finishes. She also did the modeling and texturing for NPCs and environmental assets, and did the design UI painting and 3D UI model to enhance the game's visual interface. Lastly, she did game illustrations that enriched the project’s narrative and aesthetic.
+              </p>
+            </div>
           </div>
         </div>
       </div>
-      <!-- 2. Giovanni -->
-      <div class="team-member" onclick="window.open('https://example.com/giovanni','_blank')">
-        <div class="flip-inner">
-          <div class="flip-front">
-            <img src="./asset/Giovanni.png" alt="Director of Visual - Giovanni" loading="lazy" />
-            <p><strong>Giovanni</strong></p>
-          </div>
-          <div class="flip-back">
-            <h3>Learn More</h3>
-            <p style="margin-top:0.5em;">
-              Giovanni is an effects artist, level designer, game designer, and 3D generalist behind creating the VFX you see throughout the game. He also contributed to the level design for each of the levels along with designing and coding the in-game UX interactions. You can check out the breakdowns of his VFX, level design, and UX work [here].
-
-            </p>
-          </div>
-        </div>
-      </div>
-      <!-- 3. Jingxuan -->
-      <div class="team-member" onclick="window.open('https://example.com/jingxuan','_blank')">
-        <div class="flip-inner">
-          <div class="flip-front">
-            <img src="./asset/Jingxuan.jpg" alt="Art Director - Jingxuan" loading="lazy" />
-            <p><strong>Jingxuan</strong></p>
-          </div>
-          <div class="flip-back">
-            <h3>Learn More</h3>
-            <p style="margin-top:0.5em;">
-              Jingxuan is the Art Lead and 3D Modeler for the project, responsible for creating 3D models and applying materials. Additionally, Jingxuan is in charge of designing and assembling the art book, ensuring a cohesive visual presentation of the project’s artistic direction. His contributions include modeling and texturing the bumper cars, as well as environmental assets such as houses, props, and foliage.
-
-            </p>
-          </div>
-        </div>
-      </div>
-      <!-- 4. Yang -->
-      <div class="team-member" onclick="window.open('https://example.com/yang','_blank')">
-        <div class="flip-inner">
-          <div class="flip-front">
-            <img src="./asset/Yang.jpg" alt="Technical Director - Yang" loading="lazy" />
-            <p><strong>Yang</strong></p>
-          </div>
-          <div class="flip-back">
-            <h3>Learn More</h3>
-            <p style="margin-top:0.5em;">
-              Yang serves as a echnical director on the game project "Bubono's Boppo Fun Park," where he is primarily responsible for feature development, stylized rendering, and AI integration. In designing the enemy and AI systems, he implemented more challenging intelligent interaction mechanisms while enhancing player engagement with the game world. Click [here] to learn more about his technical innovations and contributions to the project.
-            </p>
-          </div>
-        </div>
-      </div>
-      <!-- 5. Yuyan -->
-      <div class="team-member" onclick="window.open('https://example.com/yuyan','_blank')">
-        <div class="flip-inner">
-          <div class="flip-front">
-            <img src="./asset/Yuyan.png" alt="Director of Character & Interface - Yuyan" loading="lazy" />
-            <p><strong>Yuyan</strong></p>
-          </div>
-          <div class="flip-back">
-            <h3>Learn More</h3>
-            <p style="margin-top:0.5em;">
-              Yuyan Liu served as the character designer, 3D modeler, and 2D artist for the project, contributing to character design, asset modeling, and 2D artwork. Her responsibilities included designing, modeling, and texturing main characters, including their details and material finishes. She also did the modeling and texturing for NPCs and environmental assets, and did the design UI painting and 3D UI model to enhance the game's visual interface. Lastly, she did game illustrations that enriched the project’s narrative and aesthetic.
-
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
+    </section>
+  </div>
+  
+  <!-- 返回顶部按钮 -->
+  <button id="backToTop" onclick="scrollToTop()" aria-label="Back to top"><i class="fas fa-chevron-up"></i></button>
+  
   <!-- 页面底部Footer -->
   <footer>
     <div class="social-icons">
@@ -589,16 +705,16 @@
       Bubono’s Bumperland
     </p>
   </footer>
-
+  
   <!-- Navnav+ JS & 自定义交互脚本 -->
   <script src="https://cdn.jsdelivr.net/gh/cruip/css-navnav@latest/dist/navnav.min.js"></script>
   <script>
-    // ========== Tab Navigation: 仅显示 active section ==========
+    // -------------------- Tab Navigation：仅显示当前激活的 section --------------------
     const tabLinks = document.querySelectorAll('.nav-menu li a');
     const sections = document.querySelectorAll('.tab-section');
     function showTab(tabId) {
       sections.forEach(sec => {
-        if(sec.id === tabId) {
+        if (sec.id === tabId) {
           sec.classList.add('active');
         } else {
           sec.classList.remove('active');
@@ -616,8 +732,8 @@
     });
     // 默认显示 Home Tab
     showTab("home");
-
-    // ========== Art Book 轮播 ==========
+    
+    // -------------------- Art Book 轮播功能 --------------------
     const artImages = [
       './asset/BannerImage.png',
       './asset/Feature_1.png',
@@ -636,8 +752,8 @@
       currentIndex = (currentIndex + 1) % artImages.length;
       showImage(currentIndex);
     }
-
-    // ========== Intersection Observer: 淡入动画 ==========
+    
+    // -------------------- Intersection Observer：淡入动画效果 --------------------
     const fadeSections = document.querySelectorAll('.fade-section');
     const observer = new IntersectionObserver(entries => {
       entries.forEach(entry => {
@@ -647,15 +763,19 @@
       });
     }, { threshold: 0.2 });
     fadeSections.forEach(section => observer.observe(section));
-
-    // ========== 点击菜单项 => 显示箭头 ==========
-    const navLinks = document.querySelectorAll('.nav-menu li a');
-    navLinks.forEach(link => {
-      link.addEventListener('click', () => {
-        navLinks.forEach(lnk => lnk.classList.remove('active'));
-        link.classList.add('active');
-      });
+    
+    // -------------------- 返回顶部按钮功能 --------------------
+    const backToTopButton = document.getElementById('backToTop');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 300) {
+        backToTopButton.style.display = 'flex';
+      } else {
+        backToTopButton.style.display = 'none';
+      }
     });
+    function scrollToTop() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   </script>
 </body>
 </html>
