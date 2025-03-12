@@ -266,6 +266,7 @@
       border-radius: 8px;
     }
 
+    /* 修改 Download Artbook 为链接，指向本地 PDF 文件 */
     .download-pdf {
       display: block;
       margin: 2rem auto;
@@ -275,6 +276,7 @@
       border: none;
       border-radius: 28px;
       cursor: pointer;
+      text-decoration: none;
     }
 
     /* Team */
@@ -456,6 +458,7 @@
       .nav-links {
         display: none;
       }
+
       .section-title {
         font-size: 2rem;
       }
@@ -517,7 +520,7 @@
   <section id="artbook">
     <h2 class="section-title">Artbook Preview</h2>
     <div class="gallery-grid"></div>
-    <button class="download-pdf">Download Artbook</button>
+    <a href="./asset/Bubono’s Bumperland Art Bookpdf.pdf" download class="download-pdf">Download Artbook</a>
   </section>
 
   <section id="team">
@@ -645,7 +648,7 @@
       if (e.target.closest('.feature-card')) {
         const title = e.target.closest('.feature-card').dataset.id;
         const feature = features.find(f => f.title === title);
-        window.location.href = "https://docs.google.com/document/d/1hqV6vA4r5gTcReTCFjNi-J8lotKB8NRmWwc2klcjD3g/edit?usp=sharing" ;
+        window.location.href = "https://docs.google.com/document/d/1hqV6vA4r5gTcReTCFjNi-J8lotKB8NRmWwc2klcjD3g/edit?usp=sharing";
       }
       // Team member click still uses modal popup
       if (e.target.closest('.team-member')) {
