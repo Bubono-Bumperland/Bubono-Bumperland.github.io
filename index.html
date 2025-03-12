@@ -1,260 +1,306 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<<<<<<< HEAD
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bubono's Bumperland | Whimsical Adventure</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>Bubono's Bumperland</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        @font-face {
+            font-family: 'BumperFont';
+            src: url('./asset/BeckerblacknfRegular-0aWP.ttf') format('truetype');
+            font-weight: 400;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'BoldBumperFont';
+            src: url('./asset/BeckerBlackNf-RAJe.ttf') format('truetype');
+            font-weight: 700;
+            font-style: normal;
+        }
+
+        /* 例如，整个页面使用 Regular 字体，标题用 Bold */
+        body {
+            font-family: 'BoldBumperFont', sans-serif;
+        }
+        p{
+            font-family: 'Roboto', sans-serif;
+        }
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-family: 'BoldBumperFont', sans-serif;
+        }
+
+        :root {
+            --primary: #BB86FC;
+            --primary-variant: #3700B3;
+            --secondary: #03DAC6;
+            --background: #121212;
+            --surface: #1E1E1E;
+            --error: #CF6679;
+            --on-primary: #000;
+            --on-secondary: #000;
+            --on-background: #FFF;
+            --on-surface: #FFF;
+            --transition: cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Arial Rounded MT Bold', sans-serif;
-        }
-
-        html {
-            scroll-behavior: smooth;
+            font-family: 'Roboto', sans-serif;
         }
 
         body {
-            background: #1a1a2e;
-            color: #fff;
-            position: relative;
-            padding-bottom: 120px; /* Footer height */
+            background: var(--background);
+            color: var(--on-background);
+            line-height: 1.6;
         }
 
         /* Navigation */
-        .nav-container {
+        .navbar {
             position: fixed;
             top: 0;
             width: 100%;
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             background: transparent;
+            /* 默认背景透明 */
+            transition: all 0.3s var(--transition);
             z-index: 1000;
-            transition: all 0.5s ease;
-        }
-
-        .nav-container.scrolled {
-            background: rgba(26, 26, 46, 0.95);
             backdrop-filter: blur(10px);
+            transform: translateY(0);
+            /* 始终显示 */
         }
 
-        .nav-logo {
-            position: absolute;
-            left: 2rem;
-            top: 50%;
-            transform: translateY(-50%);
+        .navbar.scrolled {
+            background: rgba(30, 30, 30, 0.95);
+            /* 滚动后深色背景 */
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .brand {
             display: flex;
             align-items: center;
             gap: 1rem;
-            transition: 0.3s;
         }
 
-        .nav-logo img {
-            height: 40px;
-            width: auto;
-            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+        .logo {
+            height: 4vw;
         }
 
-        .nav-logo span {
-            font-size: 1.2rem;
-            font-weight: bold;
-            color: #fff;
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            color: var(--on-surface);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: all 0.3s var(--transition);
+        }
+
+        .nav-link:hover {
+            background: rgba(255, 255, 255, 0.08);
         }
 
         .download-btn {
-            position: absolute;
-            right: 2rem;
-            top: 50%;
-            transform: translateY(-50%);
-            padding: 0.8rem 1.5rem;
-            background: #e94584;
-            color: white;
-            border-radius: 25px;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            transition: 0.3s;
+            background: var(--primary);
+            color: var(--on-primary);
+            padding: 12px 24px;
+            border-radius: 28px;
             text-decoration: none;
-        }
-
-        .download-btn:hover {
-            background: #ff5c97;
-            transform: translateY(-50%) scale(1.05);
-        }
-
-        .nav-menu {
-            display: flex;
-            justify-content: center;
-            padding: 1.5rem 180px 1.5rem 2rem;
-        }
-
-        .nav-item {
-            margin: 0 2rem;
-            cursor: pointer;
-            transition: 0.3s;
-            position: relative;
-            color: rgba(255,255,255,0.8);
-        }
-
-        .nav-item::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: #e94584;
-            transition: 0.3s;
-        }
-
-        .nav-item:hover::after {
-            width: 100%;
-        }
-
-        .nav-item.active {
-            color: #e94584;
+            font-weight: 500;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s var(--transition);
         }
 
         /* Hero Section */
         .hero {
+            padding: 0;
+            margin: 0;
+            border: 0;
             height: 100vh;
+            width: 100vw;
             position: relative;
             overflow: hidden;
         }
 
         #trailer {
-            width: 100%;
-            height: 100%;
+            padding: 0;
+            margin: 0;
+            border: 0;
+            width: 100vw;
+            height: 100vh;
             object-fit: cover;
-            opacity: 0.9;
         }
 
-        .video-overlay {
+        .scroll-indicator {
             position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 30%;
-            background: linear-gradient(transparent, #1a1a2e);
-        }
-
-        /* Scroll Down Arrow */
-        .scroll-down {
-            position: absolute;
-            bottom: 20%;
+            bottom: 10%;
             left: 50%;
             transform: translateX(-50%);
-            animation: float 2s infinite;
-            cursor: pointer;
-            z-index: 100;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translate(-50%, 0) }
-            50% { transform: translate(-50%, 15px) }
-        }
-
-        .scroll-down i {
             font-size: 2.5rem;
-            color: rgba(255,255,255,0.8);
-            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
-            transition: 0.3s;
+            color: var(--primary);
+            background: rgba(0, 0, 0, 0.3);
+            /* 半透明背景 */
+            padding: 10px;
+            padding-left: 4vw;
+            padding-right: 4vw;
+            border-radius: 1vw;
+            animation: pulse 1.5s infinite;
         }
 
-        .scroll-down:hover i {
-            color: #e94584;
-            transform: scale(1.2);
+        @keyframes pulse {
+            0% {
+                transform: translateX(-50%) scale(1);
+                opacity: 1;
+            }
+
+            50% {
+                transform: translateX(-50%) scale(1.2);
+                opacity: 0.7;
+            }
+
+            100% {
+                transform: translateX(-50%) scale(1);
+                opacity: 1;
+            }
         }
 
-        /* Sections Common Style */
+        /* Sections */
         section {
-            padding: 8rem 2rem;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
+            padding: 4rem 5%;
         }
 
+        section:not(.hero) {
+            width: 80vw;
+            margin: 0 auto;
+        }
+        .brief-text {
+    width: 35vw;
+    margin: 0 auto;
+    text-indent: 4rem;
+    text-align: center;
+}
         .section-title {
             text-align: center;
-            font-size: 3rem;
             margin-bottom: 4rem;
-            color: #e94584;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 2rem;
+            font-size: 2.5rem;
+            position: relative;
         }
 
-        /* Game Features */
-        .features {
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: var(--primary);
+        }
+        .brief-text{
+            text-indent: 2rem; /* Adjusts the indentation of the first line */
+    text-align: left; /* Aligns text to the left within the container */
+        }
+        /* Features */
+        .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(3, 1fr);
+            /* 固定3列 */
             gap: 2rem;
             max-width: 1200px;
             margin: 0 auto;
         }
 
         .feature-card {
-            background: rgba(255,255,255,0.1);
-            padding: 2rem;
-            border-radius: 15px;
-            backdrop-filter: blur(5px);
-            transition: 0.3s;
-            cursor: pointer;
-            position: relative;
+            background: var(--surface);
+            text-align: center;
+            border-radius: 12px;
             overflow: hidden;
+            cursor: pointer;
+            padding: 0.5rem;
+            transition: transform 0.3s var(--transition);
         }
 
-        .feature-preview {
+        .feature-card p {
+            font-size: 1.7vh;
+        }
+
+        .feature-image {
             width: 100%;
-            height: 200px;
-            border-radius: 10px;
+            height: 70%;
             object-fit: cover;
-            margin-bottom: 1rem;
+            border-radius: 1vw;
         }
 
-        .feature-card:hover {
-            transform: translateY(-10px);
-            background: rgba(255,255,255,0.15);
+        /* Gallery */
+        #artbook {
+            margin-bottom: 10vw;
         }
 
-        /* Artbook Gallery */
-        .art-grid {
+        .gallery-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1rem;
+            gap: 1.5rem;
             max-width: 1200px;
-            margin: 0 auto;
+            margin: 0 auto 3rem;
         }
 
-        .art-item {
-            border-radius: 10px;
-            overflow: hidden;
-            cursor: pointer;
-            transition: 0.3s;
-            position: relative;
-            aspect-ratio: 1/1;
-        }
-
-        .art-item img {
+        .gallery-item img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: 0.3s;
+            border-radius: 8px;
         }
 
-        .art-item:hover img {
-            transform: scale(1.1);
+        .download-pdf {
+            display: block;
+            margin: 2rem auto;
+            padding: 1rem 2rem;
+            background: var(--secondary);
+            color: var(--on-secondary);
+            border: none;
+            border-radius: 28px;
+            cursor: pointer;
         }
 
-        /* Team Section */
+        /* Team */
+        #team {
+            background-image: url('./asset/BG.png');
+            /* 替换为你的背景图片路径 */
+            background-attachment: fixed;
+            /* 固定背景，产生视差效果 */
+            background-size: cover;
+            /* 背景始终覆盖屏幕宽度 */
+            background-position: center;
+            /* 居中显示 */
+            background-repeat: no-repeat;
+            /* 防止重复 */
+            width: 100%;
+            padding-top: 7%;
+            padding-bottom: 7%;
+            padding-left: 0;
+            padding-right: 0;
+            color: #000;
+            /* 设置 team 区域内文字为黑色 */
+        }
+
         .team-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
             gap: 3rem;
             max-width: 1200px;
             margin: 0 auto;
@@ -262,1131 +308,500 @@
 
         .team-member {
             text-align: center;
+            cursor: pointer;
+            background-color: #ffffff20;
+            backdrop-filter: blur(15px);
+            padding: 0.5vw;
+            border-radius: 1vw;
+        }
+
+        .team-avatar {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            /* 保证图片以适合的比例显示 */
+            border-radius: 50%;
+            /* 让图片圆润 */
+            display: block;
+            margin: 0 auto;
+            /* 居中显示 */
         }
 
         .member-avatar {
-            width: 150px;
-            height: 150px;
+            width: 160px;
+            height: 160px;
             border-radius: 50%;
-            margin: 0 auto 1rem;
-            overflow: hidden;
-            border: 3px solid #e94584;
-            transition: 0.3s;
-            cursor: pointer;
+            object-fit: cover;
+            border: 3px solid var(--primary);
         }
 
-        .member-avatar:hover {
-            transform: rotate(15deg);
-        }
-
-        /* Modal Styles */
-        .modal-overlay {
+        /* Modal */
+        .modal {
+            display: none;
+            /* 默认隐藏 */
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.8);
-            display: none;
-            justify-content: center;
-            align-items: center;
+            background: rgba(0, 0, 0, 0.5);
+            /* 轻微透明的背景 */
             z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .portfolio-btn {
+            background: var(--primary);
+            color: var(--on-primary);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 28px;
+            cursor: pointer;
+            transition: background 0.3s var(--transition);
+            display: block;
+            margin: 20px auto;
+            /* 上下20px, 左右自动 */
+        }
+
+        .portfolio-btn:hover {
+            background: var(--primary-variant);
         }
 
         .modal-content {
-            background: rgba(26, 26, 46, 0.95);
-            padding: 2rem;
-            border-radius: 15px;
-            max-width: 800px;
+            background: var(--surface);
+            border-radius: 8px;
+            /* 小圆角 */
+            padding: 24px;
+            /* 更宽松的内边距 */
             width: 90%;
+            max-width: 600px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            /* 提升视觉层次 */
             position: relative;
-            backdrop-filter: blur(10px);
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .modal-header {
+            margin-bottom: 20px;
+            /* 增加 header 底部间距 */
+            margin-top: 20px;
+        }
+
+        .modal-body {
+            margin-top: 20px;
+            /* 增加 body 顶部间距 */
         }
 
         .modal-close {
             position: absolute;
-            top: 1rem;
-            right: 1rem;
-            cursor: pointer;
+            top: 16px;
+            /* 根据需要微调 */
+            right: 16px;
+            /* 根据需要微调 */
+            background: transparent;
+            border: none;
             font-size: 1.5rem;
-            color: #fff;
+            color: var(--on-surface);
+            cursor: pointer;
         }
 
         .modal-image {
+            padding-top: 1vw;
+            padding-bottom: 1vw;
             width: 100%;
-            max-height: 400px;
-            object-fit: contain;
-            border-radius: 10px;
-            margin-bottom: 1rem;
-        }
-
-        .modal-bio {
-            text-align: center;
-            margin: 1rem 0;
-            line-height: 1.6;
-        }
-
-        .modal-website {
+            /* 占满父容器宽度 */
+            max-height: 300px;
+            /* 限制最大高度，300px可以根据需要调整 */
+            object-fit: cover;
+            /* 保持比例并裁剪超出部分 */
             display: block;
-            width: max-content;
-            margin: 1rem auto 0;
-            padding: 0.8rem 1.5rem;
-            background: #e94584;
-            color: white;
-            border-radius: 25px;
-            text-decoration: none;
-            transition: 0.3s;
+            margin: 0 auto;
+            /* 居中显示 */
         }
 
-        .modal-website:hover {
-            background: #ff5c97;
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
         }
 
         /* Footer */
         footer {
-            position: absolute;
-            bottom: 0;
-            width: 100%;
-            height: 120px;
-            background: rgba(26, 26, 46, 0.95);
+            background: #1e1e1e3a;
+            padding: 4rem 5%;
+            text-align: center;
+        }
+
+        .social-links {
             display: flex;
-            align-items: center;
             justify-content: center;
             gap: 2rem;
-            backdrop-filter: blur(10px);
+            margin-bottom: 2rem;
         }
 
-        .social-icon {
+        .social-links a {
             font-size: 2rem;
-            color: #fff;
-            transition: 0.3s;
+            color: var(--on-surface);
         }
 
-        .social-icon:hover {
-            color: #e94584;
-            transform: translateY(-3px);
-        }
-
-        /* Back to Top */
-        .back-to-top {
-            position: fixed;
-            bottom: 2rem;
-            right: 2rem;
-            width: 50px;
-            height: 50px;
-            background: #e94584;
-            border-radius: 50%;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: 0.3s;
-            z-index: 1000;
-        }
-
-        .back-to-top:hover {
-            background: #ff5c97;
-            transform: scale(1.1);
-        }
-
+        /* Responsive */
         @media (max-width: 768px) {
-            .nav-menu {
-                flex-direction: column;
-                align-items: center;
-                padding: 3rem 2rem 1rem;
-            }
-            
-            .nav-item {
-                margin: 0.5rem 0;
-            }
-
-            .nav-logo {
-                left: 50%;
-                transform: translate(-50%, -50%);
-                top: 30px;
-            }
-
-            .nav-logo span {
+            .nav-links {
                 display: none;
             }
 
-            .download-btn {
-                position: static;
-                transform: none;
-                width: max-content;
-                margin: 1rem auto;
-            }
-
             .section-title {
-                flex-direction: column;
-                font-size: 2.5rem;
-            }
-
-            .features {
-                grid-template-columns: 1fr;
-            }
-
-            footer {
-                height: 150px;
-                flex-direction: column;
-                padding: 1rem 0;
+                font-size: 2rem;
             }
         }
+
+        #backToTop {
+            position: fixed;
+            bottom: 20px;
+            /* 距离底部 20px */
+            right: 20px;
+            /* 距离右边 20px */
+            background: var(--primary);
+            color: var(--on-primary);
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            display: none;
+            /* 默认隐藏 */
+            z-index: 3000;
+            transition: opacity 0.3s ease;
+        }
     </style>
-=======
-  <meta charset="UTF-8" />
-  <!-- 移动端自适应 -->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Bubono’s Bumperland</title>
-  <link rel="icon" href="./asset/Logo.png">
-  
-  <!-- Navnav+ CSS (CDN) -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/cruip/css-navnav@latest/dist/navnav.min.css" />
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <!-- Uiverse (CDN) -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/uiverse/uiverse@latest/dist/uiverse.min.css">
-
-  <style>
-    /* CSS变量定义，便于全局统一调整 */
-    :root {
-      --base-font: 'Arial', sans-serif;
-      --base-font-size: 16px;
-      --heading-font-size: 2rem;
-      --body-font-size: 1rem;
-      --base-line-height: 1.6;
-      --base-spacing: 1rem;
-      --container-max-width: 80%;
-      --primary-color: #333;
-      --secondary-color: #93b5cf;
-      --background-overlay: rgba(255,255,255,0.95);
-      --section-bg: rgba(255,255,255,0.9);
-      --section-padding: 2rem;
-      --section-margin: 3rem 0;
-      --transition-duration: 0.3s;
-    }
-
-    /* 全局基础设置 */
-    html {
-      font-size: var(--base-font-size);
-      box-sizing: border-box;
-      scroll-behavior: smooth;
-      letter-spacing: 0.5px;
-    }
-    *, *::before, *::after {
-      box-sizing: inherit;
-    }
-    html, body {
-      margin: 0;
-      padding: 0;
-      overflow-x: hidden;
-      font-family: var(--base-font);
-      color: var(--primary-color);
-      line-height: var(--base-line-height);
-      background-size: cover;
-    }
-
-    /* Header 与 Navbar */
-    header {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      z-index: 1000;
-      background: var(--background-overlay);
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-      padding: 0 var(--base-spacing);
-    }
-    .top-nav {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      max-width: 1200px;
-      width: 100%;
-      margin: 0 auto;
-      padding: var(--base-spacing) 0;
-      min-height: 60px;
-    }
-    .nav-brand {
-      display: flex;
-      align-items: center;
-    }
-    .nav-brand img {
-      max-height: 50px;
-      transition: transform var(--transition-duration);
-    }
-    .nav-brand img:hover {
-      transform: scale(1.05);
-    }
-    .nav-brand .game-title {
-      font-size: 2rem;
-      font-weight: bold;
-      color: var(--primary-color);
-      margin-left: 0.5rem;
-    }
-    .nav-menu {
-      display: flex;
-      gap: 1.5rem;
-    }
-    .nav-menu li {
-      list-style: none;
-    }
-    .nav-menu li a {
-      color: var(--primary-color);
-      font-weight: 500;
-      padding: 0.5em 0.8em;
-      font-size: 1rem;
-      border-radius: 4px;
-      text-decoration: none;
-      transition: background-color var(--transition-duration);
-    }
-    .nav-menu li a:hover,
-    .nav-menu li a:focus {
-      background-color: #f2f2f2;
-    }
-    .nav-menu li a.active {
-      background-color: #ddd;
-    }
-    .nav-menu li a.active::after {
-      content: "→";
-      margin-left: 0.5em;
-      color: var(--secondary-color);
-      font-weight: bold;
-    }
-    .nav-toggle {
-      display: none;
-      font-size: 1.5rem;
-      cursor: pointer;
-    }
-    @media (max-width: 768px) {
-      .nav-toggle {
-        display: block;
-      }
-      .nav-menu {
-        display: none;
-        flex-direction: column;
-        position: absolute;
-        top: 60px;
-        left: 0;
-        right: 0;
-        background: #fff;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      }
-      .nav-menu li a {
-        border-radius: 0;
-        padding: 0.75em 1em;
-      }
-      .nav-menu.open {
-        display: flex;
-      }
-    }
-
-    /* Container 与 Section 样式 */
-    .container {
-      max-width: var(--container-max-width);
-      margin: 100px auto 0;
-      padding: var(--base-spacing);
-    }
-    section {
-      margin: var(--section-margin);
-      padding: var(--section-padding);
-      background: var(--section-bg);
-      border-radius: 10px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-    }
-    h1, h2, h3, .banner-title, .nav-menu li a, .game-title {
-      font-family: var(--base-font);
-      letter-spacing: 0.5px;
-    }
-    section h2 {
-      text-align: center;
-      font-size: var(--heading-font-size);
-      margin-bottom: 1em;
-    }
-    p {
-      font-size: var(--body-font-size);
-      margin-bottom: 1em;
-    }
-
-    /* 原有 Section 淡入动画 */
-    .fade-section {
-      opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 0.6s ease, transform 0.6s ease;
-    }
-    .fade-section.fade-in {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    /* 全宽Banner (100vh) 与 Banner Title */
-    .fullwidth-banner {
-      position: relative;
-      width: 100vw;
-      margin-left: calc(50% - 50vw);
-      margin-right: calc(50% - 50vw);
-      height: 100vh;
-    }
-    .fullwidth-banner img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: opacity var(--transition-duration);
-    }
-    .banner-title {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      color: #ffffff;
-      font-size: 4rem;
-      font-weight: bold;
-      text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
-    }
-
-    /* Home部分：Trailer在上，Brief在下 */
-    #home {
-      background-color: rgba(255, 255, 255, 0.5);
-      margin-top: 0;
-      backdrop-filter: blur(5px);
-      border-radius: 10px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-    }
-    .home-content {
-      display: flex;
-      flex-direction: column;
-      gap: 2em;
-      justify-content: center;
-      align-items: center;
-    }
-    .video-embed {
-      width: 100%;
-      background: #fff;
-      box-shadow: 0 0 5px rgba(0,0,0,0.1);
-      border-radius: 10px;
-      padding: 1em;
-    }
-    .video-embed video {
-      width: 100%;
-      height: auto;
-      display: block;
-      border-radius: 10px;
-    }
-    .text-blurb {
-      width: 100%;
-      background: #fff;
-      box-shadow: 0 0 5px rgba(0,0,0,0.1);
-      border-radius: 10px;
-      padding: 1em;
-      text-align: center;
-    }
-
-    /* Features 部分 */
-    #features {
-      background-color: rgba(255, 255, 255, 0.5);
-      margin-top: 0;
-      backdrop-filter: blur(5px);
-      border-radius: 10px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-    }
-    .feature-cards {
-      display: flex;
-      flex-direction: column;
-      gap: 2em;
-      margin-top: 1.5em;
-    }
-    .feature-card {
-      display: flex;
-      align-items: center;
-      background: #f9f9f9;
-      padding: 1em;
-      box-shadow: 0 0 5px rgba(0,0,0,0.1);
-      border-radius: 10px;
-      gap: 1em;
-      transition: transform var(--transition-duration);
-    }
-    .feature-card:hover {
-      transform: translateY(-5px);
-    }
-    .feature-cards .feature-card:nth-child(even) {
-      flex-direction: row-reverse;
-    }
-    .feature-text {
-      flex: 1;
-    }
-    .feature-image {
-      width: 20vw;
-      min-width: 150px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      border-radius: 10px;
-      overflow: hidden;
-    }
-    .feature-image img {
-      width: 100%;
-      height: auto;
-      object-fit: cover;
-    }
-
-    /* Art Book 部分 */
-    #artbook {
-      background-color: rgba(255, 255, 255, 0.5);
-      margin-top: 0;
-      backdrop-filter: blur(5px);
-      border-radius: 10px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-    }
-    .artbook-container {
-      width: 100%;
-      aspect-ratio: 65 / 30;
-      margin: 0 auto 1em;
-      position: relative;
-      text-align: center;
-      overflow: hidden;
-      box-shadow: 0 0 5px rgba(0,0,0,0.1);
-      border-radius: 10px;
-    }
-    #artbookImage {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform var(--transition-duration);
-    }
-    #artbookImage:hover {
-      transform: scale(1.02);
-    }
-    .prev,
-    .next {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      border: none;
-      padding: 0.5em 1em;
-      cursor: pointer;
-      font-size: 1rem;
-      background: var(--secondary-color);
-      color: #fff;
-      border-radius: 4px;
-      transition: background-color var(--transition-duration);
-    }
-    .prev:hover,
-    .next:hover {
-      background: #7aa3c2;
-    }
-    .prev { left: 0.5em; }
-    .next { right: 0.5em; }
-    .pdf-download {
-      text-align: center;
-      margin-top: 1em;
-    }
-
-    /* About Us 部分 */
-    #aboutus {
-      background-color: rgba(255, 255, 255, 0.5);
-      margin-top: 0;
-      backdrop-filter: blur(5px);
-      border-radius: 10px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-    }
-    .team-intro {
-      margin-bottom: 2em;
-    }
-    .team-members {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 2em;
-      justify-content: center;
-    }
-    .team-member {
-      width: 100%;
-      max-width: 500px;
-      height: 340px;
-      perspective: 1000px;
-      cursor: pointer;
-      transition: transform var(--transition-duration);
-    }
-    .team-member:hover {
-      transform: scale(1.02);
-    }
-    .flip-inner {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      transition: transform 0.6s;
-      transform-style: preserve-3d;
-    }
-    .team-member:hover .flip-inner {
-      transform: rotateY(180deg);
-    }
-    .flip-front, .flip-back {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      border-radius: 10px;
-      box-shadow: 0 0 5px rgba(0,0,0,0.1);
-      backface-visibility: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      text-align: center;
-      padding: 1em;
-    }
-    .flip-front {
-      background: #f9f9f9;
-    }
-    .flip-front img {
-      width: auto;
-      height: 120px;
-      border-radius: 50%;
-      margin-bottom: 0.5em;
-      transition: transform var(--transition-duration);
-    }
-    .flip-front img:hover {
-      transform: scale(1.05);
-    }
-    .flip-back {
-      background: var(--secondary-color);
-      color: #fff;
-      transform: rotateY(180deg);
-    }
-
-    /* 自定义按钮 */
-    .uiverse-button {
-      border: none;
-      background-color: #444;
-      color: #fff;
-      border-radius: 0.6em;
-      transition: box-shadow var(--transition-duration), transform 0.2s;
-      font-size: 1rem;
-      padding: 0.6em 1.2em;
-      cursor: pointer;
-    }
-    .uiverse-button:hover {
-      box-shadow: 0 0 10px rgba(0,0,0,0.2);
-      transform: translateY(-2px);
-    }
-
-    /* Tab Navigation: 默认仅显示 active section */
-    .tab-section { display: none; }
-    .tab-section.active { display: block; }
-
-    /* 返回顶部按钮 */
-    #backToTop {
-      position: fixed;
-      bottom: 2rem;
-      right: 2rem;
-      display: none;
-      background-color: var(--secondary-color);
-      color: #fff;
-      border: none;
-      border-radius: 50%;
-      width: 3rem;
-      height: 3rem;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.3);
-      transition: opacity var(--transition-duration);
-      z-index: 1001;
-    }
-    #backToTop:focus {
-      outline: none;
-      box-shadow: 0 0 0 3px rgba(147,181,207,0.5);
-    }
-
-    /* 新增页脚样式 */
-  footer {
-    background: rgba(255, 255, 255, 0.6);
-    backdrop-filter: blur(2px);
-    padding: 2rem 1rem;
-    text-align: center;
-    margin-top: 3rem;
-    border-top: 1px solid rgba(0,0,0,0.1);
-  }
-  .social-icons {
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
-    margin-bottom: 1rem;
-  }
-  .social-icons a {
-    color: var(--primary-color);
-    font-size: 1.5rem;
-    transition: opacity 0.3s;
-  }
-  .social-icons a:hover {
-    opacity: 0.7;
-  }
-
-  /* 加强移动端菜单样式 */
-  @media (max-width: 768px) {
-    .nav-toggle {
-      display: block;
-      background: none;
-      border: none;
-      padding: 0.5rem;
-    }
-    .nav-menu {
-      display: none;
-      width: 100%;
-      padding: 0;
-    }
-    .nav-menu.open {
-      display: flex;
-      animation: slideDown 0.3s ease;
-    }
-    .nav-menu li {
-      width: 100%;
-      text-align: center;
-    }
-  }
-
-  @keyframes slideDown {
-    from { transform: translateY(-10px); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
-  }
-  </style>
->>>>>>> 296b4b9af5fc2d309e7163992714ad5436b8bf5b
 </head>
+
 <body>
-    <nav class="nav-container">
-        <div class="nav-logo">
-            <img src="./asset/Logo.png" alt="Game Logo">
-            <span>Bubono's Bumperland</span>
+    <nav class="navbar">
+        <div class="brand">
+            <img src="./asset/Logo3.png" alt="Logo" class="logo">
         </div>
-        <a href="game.zip" class="download-btn" download>
-            <i class="fas fa-download"></i>
-            Download Now
-        </a>
-        <ul class="nav-menu">
-            <li class="nav-item active" data-section="hero">Home</li>
-            <li class="nav-item" data-section="features">Gameplay</li>
-            <li class="nav-item" data-section="artbook">Gallery</li>
-            <li class="nav-item" data-section="team">Creators</li>
-        </ul>
+        <div class="nav-links">
+            <a href="#home" class="nav-link">Home</a>
+            <a href="#artbook" class="nav-link">Artbook</a>
+            <a href="#features" class="nav-link">Features</a>
+            <a href="#team" class="nav-link">Team</a>
+        </div>
+        <a href="download/game.zip" download class="download-btn">Download</a>
     </nav>
 
-    <div class="modal-overlay" id="detailModal">
-        <div class="modal-content">
-            <span class="modal-close" onclick="closeModal()">&times;</span>
-            <img id="modalImage" class="modal-image" alt="Feature Preview">
-            <h2 id="modalTitle"></h2>
-            <p class="modal-bio" id="modalDescription"></p>
-            <a href="#" id="modalLink" class="modal-website">
-                Learn More
-            </a>
-        </div>
-<<<<<<< HEAD
-    </div>
-
-    <section class="hero">
-        <video id="trailer" autoplay muted loop playsinline poster="./asset/BannerImage.png">
-            <source src="./" type="video/mp4">
-            <source src="trailer.webm" type="video/webm">
+    <section id="home" class="hero">
+        <video id="trailer" autoplay muted loop>
+            <source src="./asset/Game Trailer.mp4" type="video/mp4">
         </video>
-        <div class="video-overlay"></div>
-        <div class="scroll-down" onclick="scrollToNext()">
+        <div class="scroll-indicator">
             <i class="fas fa-chevron-down"></i>
         </div>
     </section>
 
+    <section id="brief">
+        <h2 class="section-title">Game Overview</h2>
+        <p class="brief-text" style="text-indent: 4rem;">Bubono’s Bumperland, headed by the iconic Bubono the Rat, is a booming destination with
+            endless attractions and three different branches. There’s the medieval Bubono’s Burg, the fiery Bubono’s
+            Abyss, and the outer reaches of Bubono’s Big Bang. You play as a mechanic and your job is to maintain the
+            park and its rides and make sure every attendant is having a great time. Beware, as the staff hierarchy gets
+            more efficient, it may be time to seek out new ventures…</p>
+    </section>
+
     <section id="features">
-        <h2 class="section-title">Bumperland Adventures</h2>
-        <div class="features">
-            <div class="feature-card" 
-                 data-image="feature1.jpg"
-                 data-description="Our physics engine simulates realistic bouncing mechanics with 100+ interactive elements. Features dynamic collision detection and real-time force calculations."
-                 data-link="#">
-                <img src="./asset/Feature_1.png" class="feature-preview" alt="Physics Feature">
-                <h3>Dynamic Physics</h3>
-                <p>Experience revolutionary bounce mechanics</p>
-            </div>
-            <!-- Add more feature cards -->
-        </div>
+        <h2 class="section-title">Key Features</h2>
+        <div class="features-grid"></div>
     </section>
 
     <section id="artbook">
-        <h2 class="section-title">
-            Concept Gallery
-            <a href="concepts.pdf" class="download-btn" download>
-                <i class="fas fa-file-pdf"></i>
-                Download PDF
-            </a>
-        </h2>
-        <div class="art-grid">
-            <div class="art-item">
-                <img src="./asset/Feature_1.png" alt="Concept Art 1">
-            </div>
-            <!-- Add 6 more art items -->
-        </div>
+        <h2 class="section-title">Artbook Preview</h2>
+        <div class="gallery-grid"></div>
+        <button class="download-pdf">Download Artbook</button>
     </section>
 
     <section id="team">
-        <h2 class="section-title">Development Team</h2>
-        <div class="team-grid">
-            <div class="team-member">
-                <div class="member-avatar" 
-                     data-bio="Lead designer with 10 years experience in game development. Specializes in character design and gameplay mechanics."
-                     data-website="https://example.com/alex"
-                     onclick="showMember(this)">
-                    <img src="member1.jpg" alt="Alex Chen">
-                </div>
-                <h3>Alex Chen</h3>
-                <p>Lead Designer</p>
-            </div>
-            <div class="team-member">
-                <div class="member-avatar" 
-                     data-bio="Technical director specializing in physics engine development. Loves solving complex programming challenges."
-                     data-website="https://example.com/sam"
-                     onclick="showMember(this)">
-                    <img src="member2.jpg" alt="Sam Rodriguez">
-                </div>
-                <h3>Sam Rodriguez</h3>
-                <p>Technical Director</p>
-            </div>
-            <div class="team-member">
-                <div class="member-avatar" 
-                     data-bio="Artist and animator creating vibrant game worlds. Expert in 3D modeling and texture painting."
-                     data-website="https://example.com/maya"
-                     onclick="showMember(this)">
-                    <img src="member3.jpg" alt="Maya Patel">
-                </div>
-                <h3>Maya Patel</h3>
-                <p>Lead Artist</p>
-            </div>
-        </div>
+        <h2 class="section-title">Our Team</h2>
+        <div class="team-grid"></div>
     </section>
 
     <footer>
-        <a href="#" class="social-icon">
-            <i class="fab fa-unreal-engine"></i>
-        </a>
-        <a href="#" class="social-icon">
-            <i class="fab fa-discord"></i>
-        </a>
+        <div class="social-links">
+            <a href="#"><i class="fab fa-unreal-engine"></i></a>
+            <a href="#"><i class="fab fa-discord"></i></a>
+        </div>
+        <p>© 2025 Bumpy Ride</p>
     </footer>
 
-    <div class="back-to-top" onclick="scrollToTop()">
-        <i class="fas fa-arrow-up"></i>
+    <div class="modal" id="featureModal">
+        <div class="modal-content"></div>
     </div>
 
-    <script>
-        // Existing navigation and video logic...
+    <div class="modal" id="teamModal">
+        <div class="modal-content"></div>
+    </div>
 
-        // Feature Modal
-        document.querySelectorAll('.feature-card').forEach(card => {
-            card.addEventListener('click', () => {
-                const modal = document.getElementById('detailModal');
-                document.getElementById('modalImage').src = card.dataset.image;
-                document.getElementById('modalTitle').textContent = card.querySelector('h3').textContent;
-                document.getElementById('modalDescription').textContent = card.dataset.description;
-                document.getElementById('modalLink').href = card.dataset.link;
-                modal.style.display = 'flex';
+    <button id="backToTop" title="Back to Top">↑</button>
+
+    <script>
+        // Data
+        const features = [
+            {
+                title: "Bumping and crashing",
+                image: "./asset/Feature_1.png",
+                desc: " Bumping and crashing: Bubono’s Bumperland great Bumper Buggies are designed for chaotic uncontrollable speed and impact!",
+                details: "Depending on what you impact, you’ll be sent off at angles and speeds that can cause all sorts of mayhem. Despite the buggy’s playful appearance, anything and everything can be rammed and smashed. With the right speed and angle, nothing is out of bounds for chaos!."
+            },
+            {
+                title: "Smart Enemies",
+                image: "./asset/Feature_2.png",
+                desc: " The park branches are full of colorful characters built for each theme.",
+                details: "Projectiles fly across the park from catapults attempting to pelt pillory peasants with tomatoes, imp costumed attendees parade around with pitchforks, and UFOs buzz in the air hoping to snatch up anything that crosses their beams."
+            },
+            {
+                title: "Special abilities",
+                image: "./asset/Feature_3.png",
+                desc: "As a mechanic, you can upgrade your car depending on which foes you’ve overcome.",
+                details: " Anything you build onto your car aids in your pursuit of chaos, so go wild with any upgrade you come across!"
+            }
+        ];
+
+        const team = [
+            {
+                name: "Douglas Graham",
+                avatar: "./asset/Douglas.png",
+                role: "Producer, Level Designer, Physical Programmer",
+                bio: "Douglas is a programmer, level designer, and game designer and was the lead behind the direction of Bubono’s Bumperland. You can check out his process when detailing the game’s physics, level design, mechanics design, and team leadership [here].",
+                website: "https://dougraham.com/"
+            },
+            {
+                name: "Giovanni Torres",
+                avatar: "./asset/Giovanni.png",
+                role: "Visual Effects & Assistant Level Designer",
+                bio: "Giovanni is an effects artist, level designer, game designer, and 3D generalist behind creating the VFX you see throughout the game. He also contributed to the level design for each of the levels along with designing and coding the in-game UX interactions. You can check out the breakdowns of his VFX, level design, and UX work [here].",
+                website: "www.artstation.com/Jee-oh"
+            },
+            {
+                name: "Jingxuan He",
+                avatar: "./asset/Jingxuan.jpg",
+                role: "Art Director & Environment Artist",
+                bio: "Jingxuan is the Art Lead and 3D Modeler for the project, responsible for creating 3D models and applying materials. Additionally, Jingxuan is in charge of designing and assembling the art book, ensuring a cohesive visual presentation of the project’s artistic direction. His contributions include modeling and texturing the bumper cars, as well as environmental assets such as houses, props, and foliage.",
+                website: "https://www.artstation.com/jingxuanhe"
+            },
+            {
+                name: "Yang Liu",
+                avatar: "./asset/Yang.jpg",
+                role: "Systems & Enemy Programmer",
+                bio: "Yang serves as a Mechnical director on the game project Bubono's Boppo Fun Park, where he is primarily responsible for feature development, stylized rendering, and AI integration. In designing the enemy and AI systems, he implemented more challenging intelligent interaction mechanisms while enhancing player engagement with the game world. Click [here] to learn more about his technical innovations and contributions to the project.",
+                website: "https://yang-studio.github.io/"
+            },
+            {
+                name: "Yuyan Liu",
+                avatar: "./asset/Yuyan.png",
+                role: "Character/Environemnt Modeler  & 2D Artist",
+                bio: "Yuyan Liu served as the character designer, 3D modeler, and 2D artist for the project, contributing to character design, asset modeling, and 2D artwork. Her responsibilities included designing, modeling, and texturing main characters, including their details and material finishes. She also did the modeling and texturing for NPCs and environmental assets, and did the design UI painting and 3D UI model to enhance the game's visual interface. Lastly, she did game illustrations that enriched the project’s narrative and aesthetic.",
+                website: "#"
+            }
+        ];
+
+        // DOM Elements
+        const featuresGrid = document.querySelector('.features-grid');
+        const teamGrid = document.querySelector('.team-grid');
+        const galleryGrid = document.querySelector('.gallery-grid');
+        const backToTopBtn = document.getElementById('backToTop');
+
+        // Render Functions
+        function initFeatures() {
+            featuresGrid.innerHTML = features.map(f => `
+        <div class="feature-card" data-id="${f.title}">
+          <img src="${f.image}" class="feature-image">
+          <h3>${f.title}</h3>
+          <p>${f.desc}</p>
+        </div>
+      `).join('');
+        }
+
+        function initTeam() {
+            teamGrid.innerHTML = team.map(m => `
+        <div class="team-member" data-id="${m.name}">
+          <img src="${m.avatar}" class="member-avatar">
+          <h3>${m.name}</h3>
+          <p>${m.role}</p>
+        </div>
+      `).join('');
+        }
+
+        function initGallery() {
+            galleryGrid.innerHTML = Array(6).fill().map((_, i) => `
+        <div class="gallery-item">
+          <img src="asset/Artbook${i + 1}.png" alt="Concept Art ${i + 1}">
+        </div>
+      `).join('');
+        }
+
+        // Event Handlers
+        document.addEventListener('click', (e) => {
+            // Feature click
+            if (e.target.closest('.feature-card')) {
+                const title = e.target.closest('.feature-card').dataset.id;
+                const feature = features.find(f => f.title === title);
+                showFeatureModal(feature);
+            }
+            // Team member click
+            if (e.target.closest('.team-member')) {
+                const name = e.target.closest('.team-member').dataset.id;
+                const member = team.find(m => m.name === name);
+                showTeamModal(member);
+            }
+        });
+
+        function showFeatureModal(feature) {
+            const modal = document.getElementById('featureModal');
+            modal.querySelector('.modal-content').innerHTML = `
+        <h2>${feature.title}</h2>
+        <img src="${feature.image}" style="width:100%;height:200px;object-fit:cover;">
+        <p>${feature.details}</p>
+        <button onclick="this.closest('.modal').style.display='none'">Close</button>
+      `;
+            modal.style.display = 'flex';
+        }
+
+        function showTeamModal(member) {
+            const modal = document.getElementById('teamModal');
+            const portfolioHTML = member.website ?
+                `<button class="portfolio-btn" onclick="window.open('${member.website}', '_blank')">
+          <i class="fas fa-external-link-alt"></i> View Portfolio
+        </button>` : '';
+            modal.querySelector('.modal-content').innerHTML = `
+        <img src="${member.avatar}" style="width:100px;height:100px;border-radius:50%">
+        <h2>${member.name}</h2>
+        <h3>${member.role}</h3>
+        <p>${member.bio}</p>
+        ${member.website ? `<a href="${member.website}" target="_blank">Portfolio</a>` : ''}
+        <button onclick="this.closest('.modal').style.display='none'">Close</button>
+      `;
+            modal.style.display = 'flex';
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            initFeatures();
+            initTeam();
+            initGallery();
+
+            // 定义检查navbar状态的函数
+            function checkNavbar() {
+                const navbar = document.querySelector('.navbar');
+                // 当滚动超过50px时添加 scrolled 类，否则移除
+                if (window.pageYOffset > 50) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+            }
+
+            // 初始检查
+            checkNavbar();
+
+            // Navbar滚动逻辑
+            window.addEventListener('scroll', checkNavbar);
+
+            // Smooth scroll代码
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    document.querySelector(anchor.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
             });
         });
 
-        // Back to Top
-        function scrollToTop() {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
+        document.querySelector('.scroll-indicator').addEventListener('click', () => {
+            const nextSection = document.querySelector('section:not(.hero)');
+            if (nextSection) {
+                nextSection.scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+
+        // 优化后的模态窗口逻辑
+        function showFeatureModal(feature) {
+            const modal = document.getElementById('featureModal');
+            modal.innerHTML = `
+        <div class="modal-content feature-modal">
+          <div class="modal-header">
+            <h2>${feature.title}</h2>
+            <button class="modal-close">&times;</button>
+          </div>
+          <img src="${feature.image}" class="modal-image">
+          <div class="modal-body">
+            <p>${feature.details}</p>
+          </div>
+        </div>
+      `;
+            modal.style.display = 'flex';
+            addModalEvents(modal);
+        }
+
+        function showTeamModal(member) {
+            const modal = document.getElementById('teamModal');
+            const portfolioHTML = member.website ?
+                `<button class="portfolio-btn" onclick="window.open('${member.website}', '_blank')">
+          <i class="fas fa-external-link-alt"></i> View Portfolio
+        </button>` : '';
+            modal.innerHTML = `
+        <div class="modal-content team-modal">
+          <div class="modal-header">
+            <h2>${member.name}</h2>
+            <button class="modal-close">&times;</button>
+          </div>
+          <img src="${member.avatar}" class="team-avatar">
+          <h3>${member.role}</h3>
+          <div class="modal-body">
+            <p>${member.bio}</p>
+            ${portfolioHTML}
+          </div>
+        </div>
+      `;
+            modal.style.display = 'flex';
+            addModalEvents(modal);
+        }
+
+        function addModalEvents(modal) {
+            const closeBtn = modal.querySelector('.modal-close');
+            closeBtn.addEventListener('click', () => {
+                modal.style.display = 'none';
+            });
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    modal.style.display = 'none';
+                }
             });
         }
 
         window.addEventListener('scroll', () => {
-            const topButton = document.querySelector('.back-to-top');
-            topButton.style.display = window.scrollY > 500 ? 'flex' : 'none';
+            if (window.pageYOffset > 300) {
+                backToTopBtn.style.display = 'block';
+            } else {
+                backToTopBtn.style.display = 'none';
+            }
         });
-
-        // General Modal Control
-        function closeModal() {
-            document.querySelectorAll('.modal-overlay').forEach(modal => {
-                modal.style.display = 'none';
-            });
-        }
-
-        document.querySelectorAll('.modal-overlay').forEach(modal => {
-            modal.addEventListener('click', function(e) {
-                if(e.target === this) closeModal();
+        backToTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
             });
         });
-
-        // Initialize
-        handleScroll();
-        checkVideoPosition();
     </script>
-=======
-        <!-- Brief卡片 (下) -->
-        <div class="text-blurb" style="width:100%;">
-          <p>
-            Bubono’s Bumperland, headed by the iconic Bubono the Rat, is a booming destination with endless attractions and three different branches. There’s the medieval Bubono’s Burg, the fiery Bubono’s Abyss, and the outer reaches of Bubono’s Big Bang. You play as a mechanic and your job is to maintain the park and its rides and make sure every attendant is having a great time. Beware, as the staff hierarchy gets more efficient, it may be time to seek out new ventures…
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <section id="features" class="fade-section tab-section">
-      <h2>Features</h2>
-      <div class="feature-cards">
-        <!-- 卡片1 -->
-        <div class="feature-card">
-          <div class="feature-text">
-            <h3>Bumping and crashing</h3>
-            <p>
-              Bubono’s Bumperland great Bumper Buggies are designed for chaotic uncontrollable speed and impact! Depending on what you impact, you’ll be sent off at angles and speeds that can cause all sorts of mayhem. Despite the buggy’s playful appearance, anything and everything can be rammed and smashed. With the right speed and angle, nothing is out of bounds for chaos!
-            </p>
-          </div>
-          <div class="feature-image">
-            <img src="./asset/Feature_1.png" alt="Feature 1" loading="lazy" />
-          </div>
-        </div>
-        <!-- 卡片2 -->
-        <div class="feature-card">
-          <div class="feature-text">
-            <h3>Smart Enemies</h3>
-            <p>
-              The park branches are full of colorful characters built for each theme. Projectiles fly across the park from catapults attempting to pelt pillory peasants with tomatoes, imp costumed attendees parade around with pitchforks, and UFOs buzz in the air hoping to snatch up anything that crosses their beams.
-            </p>
-          </div>
-          <div class="feature-image">
-            <img src="./asset/Feature_2.png" alt="Feature 2" loading="lazy" />
-          </div>
-        </div>
-        <!-- 卡片3 -->
-        <div class="feature-card">
-          <div class="feature-text">
-            <h3>Special abilities</h3>
-            <p>
-              As a mechanic, you have the ability to upgrade your car depending on which foes you’ve overcome. Anything you build onto your car aids in your pursuit of chaos, so go wild with any upgrade you come across!
-            </p>
-          </div>
-          <div class="feature-image">
-            <img src="./asset/Feature_3.png" alt="Feature 3" loading="lazy" />
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="artbook" class="fade-section tab-section">
-      <h2>Art Book</h2>
-      <div class="artbook-container">
-        <img id="artbookImage" src="./asset/BannerImage.png" alt="Art Book" loading="lazy" />
-        <button class="prev uiverse-button" onclick="prevImage()">&#10094;</button>
-        <button class="next uiverse-button" onclick="nextImage()">&#10095;</button>
-      </div>
-      <div class="pdf-download">
-        <button class="uiverse-button">PDF Download</button>
-      </div>
-    </section>
-
-    <section id="aboutus" class="fade-section tab-section">
-      <h2>About Us</h2>
-      <div class="team-members">
-        <!-- 1. Douglas -->
-        <div class="team-member" onclick="window.open('https://example.com/douglas','_blank')">
-          <div class="flip-inner">
-            <div class="flip-front">
-              <img src="./asset/Douglas.png" alt="Chief Game Designer - Douglas" loading="lazy" />
-              <p><strong>Douglas Graham</strong></p>
-            </div>
-            <div class="flip-back">
-              <h3>Learn More</h3>
-              <p style="margin-top:0.5em;">
-                Douglas is a programmer, level designer, and game designer and was the lead behind the direction of Bubono’s Bumperland. You can check out his process when detailing the game’s physics, level design, mechanics design, and team leadership [here].
-              </p>
-            </div>
-          </div>
-        </div>
-        <!-- 2. Giovanni -->
-        <div class="team-member" onclick="window.open('https://example.com/giovanni','_blank')">
-          <div class="flip-inner">
-            <div class="flip-front">
-              <img src="./asset/Giovanni.png" alt="Director of Visual - Giovanni" loading="lazy" />
-              <p><strong>Giovanni Torres</strong></p>
-            </div>
-            <div class="flip-back">
-              <h3>Learn More</h3>
-              <p style="margin-top:0.5em;">
-                Giovanni is an effects artist, level designer, game designer, and 3D generalist behind creating the VFX you see throughout the game. He also contributed to the level design for each of the levels along with designing and coding the in-game UX interactions. You can check out the breakdowns of his VFX, level design, and UX work [here].
-              </p>
-            </div>
-          </div>
-        </div>
-        <!-- 3. Jingxuan -->
-        <div class="team-member" onclick="window.open('https://example.com/jingxuan','_blank')">
-          <div class="flip-inner">
-            <div class="flip-front">
-              <img src="./asset/Jingxuan.jpg" alt="Art Director - Jingxuan" loading="lazy" />
-              <p><strong>Jingxuan He</strong></p>
-            </div>
-            <div class="flip-back">
-              <h3>Learn More</h3>
-              <p style="margin-top:0.5em;">
-                Jingxuan is the Art Lead and 3D Modeler for the project, responsible for creating 3D models and applying materials. Additionally, Jingxuan is in charge of designing and assembling the art book, ensuring a cohesive visual presentation of the project’s artistic direction. His contributions include modeling and texturing the bumper cars, as well as environmental assets such as houses, props, and foliage.
-              </p>
-            </div>
-          </div>
-        </div>
-        <!-- 4. Yang -->
-        <div class="team-member" onclick="window.open('https://Yang-studio.github.io','_blank')">
-          <div class="flip-inner">
-            <div class="flip-front">
-              <img src="./asset/Yang.jpg" alt="Technical Director - Yang" loading="lazy" />
-              <p><strong>Yang liu</strong></p>
-            </div>
-            <div class="flip-back">
-              <h3>Learn More</h3>
-              <p style="margin-top:0.5em;">
-                Yang serves as a echnical director on the game project "Bubono's Boppo Fun Park," where he is primarily responsible for feature development, stylized rendering, and AI integration. In designing the enemy and AI systems, he implemented more challenging intelligent interaction mechanisms while enhancing player engagement with the game world. Click [here] to learn more about his technical innovations and contributions to the project.
-              </p>
-            </div>
-          </div>
-        </div>
-        <!-- 5. Yuyan -->
-        <div class="team-member" onclick="window.open('https://example.com/yuyan','_blank')">
-          <div class="flip-inner">
-            <div class="flip-front">
-              <img src="./asset/Yuyan.png" alt="Director of Character & Interface - Yuyan" loading="lazy" />
-              <p><strong>Yuyan Liu</strong></p>
-            </div>
-            <div class="flip-back">
-              <h3>Learn More</h3>
-              <p style="margin-top:0.5em;">
-                Yuyan Liu served as the character designer, 3D modeler, and 2D artist for the project, contributing to character design, asset modeling, and 2D artwork. Her responsibilities included designing, modeling, and texturing main characters, including their details and material finishes. She also did the modeling and texturing for NPCs and environmental assets, and did the design UI painting and 3D UI model to enhance the game's visual interface. Lastly, she did game illustrations that enriched the project’s narrative and aesthetic.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  </div>
-  
-  <!-- 返回顶部按钮 -->
-  <button id="backToTop" onclick="scrollToTop()" aria-label="Back to top"><i class="fas fa-chevron-up"></i></button>
-  
-  <!-- 页面底部Footer -->
-  <footer >
-    <div class="social-icons">
-      <a href="https://www.twitter.com" target="_blank">
-        <i class="fab fa-twitter"></i>
-      </a>
-      <a href="https://www.facebook.com" target="_blank">
-        <i class="fab fa-facebook-f"></i>
-      </a>
-      <a href="https://www.youtube.com" target="_blank">
-        <i class="fab fa-youtube"></i>
-      </a>
-    </div>
-    <p style="margin-top:0.5em;">
-      Copyright © 2025 
-      Bubono’s Bumperland
-    </p>
-  </footer>
-  
-  <!-- Navnav+ JS & 自定义交互脚本 -->
-  <script src="https://cdn.jsdelivr.net/gh/cruip/css-navnav@latest/dist/navnav.min.js"></script>
-  <script>
-    // Tab Navigation: 仅显示 active section
-    const tabLinks = document.querySelectorAll('.nav-menu li a');
-    const sections = document.querySelectorAll('.tab-section');
-    function showTab(tabId) {
-      sections.forEach(sec => {
-        if(sec.id === tabId) {
-          sec.classList.add('active');
-        } else {
-          sec.classList.remove('active');
-        }
-      });
-    }
-    tabLinks.forEach(link => {
-      link.addEventListener('click', (e) => {
-        e.preventDefault();
-        const tabId = link.getAttribute('data-tab') || link.getAttribute('href').substring(1);
-        showTab(tabId);
-        tabLinks.forEach(l => l.classList.remove('active'));
-        link.classList.add('active');
-      });
-    });
-    // 默认显示 Home Tab
-    showTab("home");
-    
-    // Art Book 轮播
-    const artImages = [
-      './asset/BannerImage.png',
-      './asset/Feature_1.png',
-      './asset/Feature_2.png',
-      './asset/Feature_3.png'
-    ];
-    let currentIndex = 0;
-    function showImage(index) {
-      document.getElementById('artbookImage').src = artImages[index];
-    }
-    function prevImage() {
-      currentIndex = (currentIndex === 0) ? artImages.length - 1 : currentIndex - 1;
-      showImage(currentIndex);
-    }
-    function nextImage() {
-      currentIndex = (currentIndex + 1) % artImages.length;
-      showImage(currentIndex);
-    }
-    
-    // Intersection Observer: 淡入动画
-    const fadeSections = document.querySelectorAll('.fade-section');
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('fade-in');
-        }
-      });
-    }, { threshold: 0.2 });
-    fadeSections.forEach(section => observer.observe(section));
-    
-    // 返回顶部按钮功能
-    const backToTopButton = document.getElementById('backToTop');
-    window.addEventListener('scroll', () => {
-      if (window.scrollY > 300) {
-        backToTopButton.style.display = 'flex';
-      } else {
-        backToTopButton.style.display = 'none';
-      }
-    });
-    function scrollToTop() {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    // 汉堡菜单切换功能
-  document.querySelector('.nav-toggle').addEventListener('click', function() {
-    document.querySelector('.nav-menu').classList.toggle('open');
-  });
-
-  // 更新标签点击事件（添加菜单关闭功能）
-  tabLinks.forEach(link => {
-    link.addEventListener('click', (e) => {
-      e.preventDefault();
-      const tabId = link.getAttribute('data-tab') || link.getAttribute('href').substring(1);
-      showTab(tabId);
-      tabLinks.forEach(l => l.classList.remove('active'));
-      link.classList.add('active');
-      
-      // 移动端点击后关闭菜单
-      if (window.innerWidth <= 768) {
-        document.querySelector('.nav-menu').classList.remove('open');
-      }
-    });
-  });
-
-  // 点击页面其他区域关闭菜单（移动端）
-  document.addEventListener('click', function(e) {
-    if (window.innerWidth > 768) return;
-    const navMenu = document.querySelector('.nav-menu');
-    const navToggle = document.querySelector('.nav-toggle');
-    if (!e.target.closest('.nav-menu') && !e.target.closest('.nav-toggle')) {
-      navMenu.classList.remove('open');
-    }
-  });
-  </script>
->>>>>>> 296b4b9af5fc2d309e7163992714ad5436b8bf5b
 </body>
+
 </html>
